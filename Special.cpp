@@ -1,4 +1,5 @@
 #include "Special.h"
+using namespace std;
 
 Special::Special()
 {

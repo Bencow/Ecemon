@@ -11,6 +11,7 @@ class Special : public Carte
         Special();
         virtual ~Special();
 
+        virtual int GetType(){return 2;} // retourne
         std::string Getname() { return m_name; }
         void Setname(std::string val) { m_name = val; }
         std::string Getdescription() { return m_description; }

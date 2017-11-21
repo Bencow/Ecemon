@@ -9,9 +9,8 @@
 class Joueur
 {
     protected:
-        std::string m_name;
         int m_argent;
-        std::vector<Carte*> m_collection;
+        std::vector<Carte> m_collection;
         std::vector<Deck> m_decks; //Tableau de tous les decks
         Deck *m_selection;
 
@@ -28,13 +27,11 @@ class Joueur
         void Setselection(Deck *val) { m_selection = val; }
 
         void ajouterArgent(int nouveau);
-        void acheterCarte(Carte* nouvelle);
+        void acheterCarte(Carte &nouvelle);
         void creerDeck(std::string nom);
-
         void selectionnerDeck(std::string nom);
-        void gererJoueur(std::vector<Carte*> toutesLesCartes);
+        void gererJoueur();
 
-        void afficherTousLesDecks()const;
 
         void ajouterCarte_Deck(Carte &nouvelle); /*Va appeler la méthode Deck::ajouterCarte,
                                                  le deck modifié est celui pointé par m_selection*/

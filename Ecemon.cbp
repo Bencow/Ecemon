@@ -34,11 +34,25 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="include/Attack.h" />
+		<Unit filename="include/Carte.h" />
 		<Unit filename="include/Deck.h" />
 		<Unit filename="include/Joueur.h" />
+		<Unit filename="include/Musicien.h" />
+		<Unit filename="include/Player.h" />
+		<Unit filename="include/Special.h" />
+		<Unit filename="include/Style.h" />
+		<Unit filename="include/Terrain.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Attack.cpp" />
+		<Unit filename="src/Carte.cpp" />
 		<Unit filename="src/Deck.cpp" />
 		<Unit filename="src/Joueur.cpp" />
+		<Unit filename="src/Musicien.cpp" />
+		<Unit filename="src/Player.cpp" />
+		<Unit filename="src/Special.cpp" />
+		<Unit filename="src/Style.cpp" />
+		<Unit filename="src/Terrain.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

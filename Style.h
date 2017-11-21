@@ -10,13 +10,14 @@ class Style : public Carte
         Style();
         virtual ~Style();
 
-        int Gettype() { return m_type; }
+        virtual int GetType(){return 3;}
         void Settype(int val) { m_type = val; }
+        int returnTypeEnergie();
 
     protected:
 
     private:
-        int m_type;
+        int m_type;/// 1,2,3,4 en fonction du type de carte énergie
 };
 
 #endif // STYLE_H
