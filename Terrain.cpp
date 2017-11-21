@@ -38,44 +38,93 @@ void Terrain::effetCarteSpecial()
 }
 int Terrain::musicienCapaciteAttaquer()
 {
-    int carteEnergie1(0);
-    int carteEnergie2(0);
-    int carteEnergie3(0);
-    int carteEnergie4(0);
+    unsigned int carteEnergie1(0);
+    unsigned int carteEnergie2(0);
+    unsigned int carteEnergie3(0);
+    unsigned int carteEnergie4(0);
 
-    for(int i=0; i<m_styles.size(); i++)
-    {
-        if(m_styles[i]->returnTypeEnergie()==1) // Si c'est une carte énergie de type 1
-        ++carteEnergie1; // On incrémente le nombre d'énergies de type 1
-        if(m_styles[i]->returnTypeEnergie()==2)
-        ++carteEnergie2;
-        if(m_styles[i]->returnTypeEnergie()==3)
-        ++carteEnergie3;
-        if(m_styles[i]->returnTypeEnergie()==4)
-        ++carteEnergie4;
-    }
+    carteEnergie1 = m_styles[0].size();
+    carteEnergie2 = m_styles[1].size();
+    carteEnergie3 = m_styles[2].size();
+    carteEnergie4 = m_styles[3].size();
 
     /// A compléter, renvoie un int en fonction de l'attaque qu'il peut faire, relation avec le nombre d'énergies
 }
-Carte* Terrain::PiocherCarte(int faconDePiocher)
+Carte* Terrain::PiocherCarte()
 {
-    if(faconDePiocher==1)
+    Carte* pass;
+
+    pass = m_pioche.front();
+    m_pioche.pop_front();
+    return pass;
+}
+
+void Terrain::JouerNormalement(Carte* carteTempon)
+{
+    Musicien* musicienTempon = dynamic_cast<Musicien*>(carteTempon);
+    Special* specialTempon = dynamic_cast<Special*>(carteTempon);
+    Style* styleTempon = dynamic_cast<Style*>(carteTempon);
+    bool choixPlacerCarte(false);
+
+    carteTempon = PiocherCarte(); /// Pioche une carte normalement, envoie le int adapté
+
+    ///On verra après avec les dynamic_cast
+    if(musicienTempon) // Si c'est une carte musicien
     {
-        ///On pioche normalement, doit retourner la carte piocher
-        /// et décaler toutes les places de la piche d'une case...
+        cout << "Voulez-vous remplacer la carte musicien ";
+        cout << "présente par celle-ci ou non? oui(1,2,3...), non(0)" << endl;
+        cin >> choixPlacerCarte;
+
+        if(choixPlacerCarte) // On remplace la carte
+        {
+            m_pioche.push_back(m_musicienActif);
+            m_musicienActif = musicienTempon;
+
+            //MusicienAttaque(m_ennemi); // attaque de l'ennemi
+
+            ///m_musicienActif->attaquer(m_ennemi);
+        }
+        if(!choixPlacerCarte) // On remet la carte tiré en dessous de la pioche
+        {
+            ///Peut être qu'on l'affiche et tout avant ?
+            m_pioche.push_back(carteTempon);
+        }
     }
-    else if(faconDePiocher==2)
+    else if(specialTempon) // Si c'est une carte spéciale
     {
-        /// Déroule et pioche jusqu'à tomber sur une créature
-        /// On devrait utiliser une file, bcp plus simple
-        /// Doit retourner la carte piocher
-        /// et décaler toutes les places de la piche d'une case...
+        cout << "Voulez-vous remplacer la carte spéciale ";
+        cout << "présente par celle-ci ou non? oui(1,2,3...), non(0)" << endl;
+        cin >> choixPlacerCarte;
+
+        if(choixPlacerCarte)
+        {
+            // On ajoute l'ancienne carte au cimetière
+            m_cimetiere.push(m_specialePersistante);
+            //On rajoute la nouvelle
+            m_specialePersistante = specialTempon;
+            effetCarteSpecial();
+        }
+        if(!choixPlacerCarte)
+        {
+            /// Va au cimetière ou non en fonction de la caractéristique
+            /// de la carte, méthode à implémenter
+
+            /// if elle ne va pas au cimetière, fait effet
+        }
+    }
+    if(styleTempon)//Si c'est un style
+    {
+        for(int i=0; i<4; i++)
+        {
+            if(styleTempon->returnStyle() == i)
+            m_styles[i].push_back(styleTempon);
+        }
     }
 }
+
 void Terrain::TourDeJeu()
 {
-    Carte* carteTempon; // Carte tempon qui va servir pour récupérer la carte piocher et agir en fonction
-    bool choixPlacerCarte(0);
+    Carte* carteTempon; // Carte tempon qui va servir pour récupérer la carte piochée et agir en fonction
     int typeDePiochage(0);
     bool voirCarteEnergie;
 
@@ -83,73 +132,24 @@ void Terrain::TourDeJeu()
     m_joueur->Setjouer(false); /// Veut dire qu'il n'a pas encore joué
     m_joueur->SetTourperso(true); /// On met à true pour qu'il puisse effectuer une fois la boucle de jeu
 
-while(m_joueur->GetTourPerso()&&!m_joueur->Getfin()) // Tant que le joueur peut jouer et qu'il ne passe pas son tour
+    while(m_joueur->GetTourPerso()&&!m_joueur->Getfin()) // Tant que le joueur peut jouer et qu'il ne passe pas son tour
     {
-        SetCondition(); /// On regarde ce qu'il peut faire
 
         if(!m_joueur->Getjouer()) // Si il n'a pas encore joué
         {
+            effetCarteSpecial(); // La carte spécial agît si il y en a une
+            SetCondition(); /// On regarde ce qu'il peut faire
+
             if(Getcondition()==1) /// On joue normalement
             {
-                typeDePiochage=1; // Cas du piochage simple
-                effetCarteSpecial(); // La carte spécial agît si il y en a une
-
-                SetCondition();/// on vérifie si on est toujours dans la bonne condition(la carte spéciale peut tout changer)
-                if(Getcondition()==1)
-                {
-                    carteTempon = PiocherCarte(typeDePiochage); /// Pioche une carte normalement, envoie le int adapté
-
-                    if(carteTempon->GetType()==1) // Si c'est une carte créature
-                    {
-                        cout << "Voulez-vous remplacer la carte musicien ";
-                        cout << "présente par celle-ci ou non? oui(1,2,3...), non(0)" << endl;
-                        cin >> choixPlacerCarte;
-
-                        if(choixPlacerCarte) // On remplace la carte
-                        {
-                            m_pioche->push_back(m_musicienActif); /// Faire un new ?
-                            m_musicienActif=carteTempon; /// Ne marche pas car pas du même type, comment faire ?
-                            MusicienAttaque(m_ennemi); // attaque de l'ennemi
-                        }
-                        if(!choixPlacerCarte) // On remet la carte tiré en dessous de la pioche
-                        {
-                            m_pioche->push_back(carteTempon);
-                        }
-                    }
-                    if(carteTempon->GetType()==2) // Si c'est une carte spéciale
-                    {
-                        cout << "Voulez-vous remplacer la carte spéciale ";
-                        cout << "présente par celle-ci ou non? oui(1,2,3...), non(0)" << endl;
-                        cin >> choixPlacerCarte;
-
-                        if(choixPlacerCarte)
-                        {
-                            /// On ajoute la carte au cimetière
-                            m_specialePersistante=carteTempon;
-                            effetCarteSpecial();
-                        }
-                        if(!choixPlacerCarte)
-                        {
-                            /// Va au cimetière ou non en fonction de la caractéristique
-                            /// de la carte, méthode à implémenter
-
-                            /// if elle ne va pas au cimetière, fait effet
-                        }
-                    }
-                    if(carteTempon->GetType()==3)
-                    {
-                        m_styles->push_back(carteTempon); // On ajoute la style au tas d'énergie
-                    }
-
-                }
-
+                JouerNormalement(carteTempon);
             }
             if(Getcondition()==2)
             {
-                typeDePiochage=2;// Cas du piochage complexe
                 effetCarteSpecial(); // La carte spécial agît si il y en a une
-                carteTempon = PiocherCarte(typeDePiochage); /// Pioche jusqu'à avoir une créature
-                m_musicienActif=carteTempon; // Le musicien prend la valeur de la carte pioché
+
+                carteTempon = PiocherCarte(); /// Pioche jusqu'à avoir une créature
+                //m_musicienActif=carteTempon; // Le musicien prend la valeur de la carte pioché
                 MusicienAttaque(m_ennemi); // attaque de l'ennemi
             }
             if(Getcondition()==3)
@@ -175,6 +175,7 @@ while(m_joueur->GetTourPerso()&&!m_joueur->Getfin()) // Tant que le joueur peut 
         finTourDeJeu(); /// Déroulement de la fin du jeu
     }
 }
+
 void Terrain::finTourDeJeu() /// Déroulement de la fin du jeu
 {
     int voirCarteEnergie(0);
@@ -281,6 +282,7 @@ void Terrain::MusicienAttaque(Terrain* cible)
     }
 
 }
+
 void Terrain::Setlife(int hitpoints) /// On enlève de la vie au musicien
 {
     int excesDegat(0);

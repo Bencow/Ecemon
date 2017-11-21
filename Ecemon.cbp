@@ -44,6 +44,7 @@
 		<Unit filename="include/Style.h" />
 		<Unit filename="include/Terrain.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="main.h" />
 		<Unit filename="src/Attack.cpp" />
 		<Unit filename="src/Carte.cpp" />
 		<Unit filename="src/Deck.cpp" />

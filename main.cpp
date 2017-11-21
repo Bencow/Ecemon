@@ -1,42 +1,70 @@
 #include <iostream>
-#include "Carte.h"
-#include "Terrain.h"
 
+#include "main.h"
 
 using namespace std;
 
 int main()
 {
-    /// Tout ça c'est juste pour tester ma méthode vérificationJeu
+//    /// Tout ça c'est juste pour tester ma méthode vérificationJeu
+//
+//    Carte* first= new Musicien();
+//    Carte* second= new Musicien();
+//    Carte* third= new Musicien();
+//    Carte* fourth= new Musicien();
+//
+//    Terrain premier;
+//    Terrain deuxieme;
+//
+//    premier.remplirPioche(first);
+//    premier.remplirPioche(second);
+//
+//    deuxieme.remplirPioche(third);
+//    deuxieme.remplirPioche(fourth);
+//
+//    premier.SetCondition();
+//    cout << endl;
+//    deuxieme.SetCondition();
+//
+//
+//    premier.DisplayTerrain();
+//    deuxieme.DisplayTerrain();
+//    cout << "La condition joueur 1: " << premier.Getcondition() << endl;
+//    cout << "La condition joueur 2: " << deuxieme.Getcondition() << endl;
+//
+//    delete first;
+//    delete second;
+//    delete third;
+//    delete fourth;
 
-    Carte* first= new Musicien();
-    Carte* second= new Musicien();
-    Carte* third= new Musicien();
-    Carte* fourth= new Musicien();
+//    vector<Carte*> tableau;
+//    Musicien* Bach = new Musicien;
+//    Carte* c;
+//
+//    tableau.push_back(Bach);
+//
+//    c = tableau[0];
+//
+//    Musicien* mus = dynamic_cast<Musicien*>(c);
+//    //Musicien* musi = c;
+//
+//    if(mus)
+//    {
+//        cout << "Yes" <<endl;
+//    }
+//    else
+//        cout << "Il faut encore que je cherche comment ca marche";
+//
 
-    Terrain premier;
-    Terrain deuxieme;
+    vector<int> tab[4];
 
-    premier.remplirPioche(first);
-    premier.remplirPioche(second);
-
-    deuxieme.remplirPioche(third);
-    deuxieme.remplirPioche(fourth);
-
-    premier.SetCondition();
-    cout << endl;
-    deuxieme.SetCondition();
+    tab[0].push_back(1);
+    tab[1].push_back(10);
 
 
-    premier.DisplayTerrain();
-    deuxieme.DisplayTerrain();
-    cout << "La condition joueur 1: " << premier.Getcondition() << endl;
-    cout << "La condition joueur 2: " << deuxieme.Getcondition() << endl;
 
-    delete first;
-    delete second;
-    delete third;
-    delete fourth;
+
+
 
     return 0;
 }

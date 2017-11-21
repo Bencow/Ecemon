@@ -3,8 +3,10 @@
 
 #include "Carte.h"
 #include "Attack.h"
+
 #include <vector>
 #include <iostream>
+
 
 class Musicien : public Carte
 {
@@ -18,6 +20,7 @@ class Musicien : public Carte
         void SetLP(int val) { m_LP = val; }
         void modifvie(int val){m_LP-=val;} // On enlève de la vie au musicien
 
+        //void attaquer(Terrain* ennemi);
 
     protected:
 
@@ -25,6 +28,7 @@ class Musicien : public Carte
         int m_LP;
         Attack* m_attaque1; // J'en déclare deuxx car ça ne marche pas avec le vecteur
         Attack* m_attaque2;
+        //vector<Attack*> m_attaque;
 };
 
 #endif // MUSICIEN_H

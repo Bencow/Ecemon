@@ -2,6 +2,8 @@
 #define ATTACK_H
 
 #include <iostream>
+#include <vector>
+
 class Attack
 {
     public:

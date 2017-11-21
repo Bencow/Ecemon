@@ -1,20 +1,20 @@
-#ifndef MAIN_H_INCLUDED
-#define MAIN_H_INCLUDED
+#ifndef MAIN_H
+#define MAIN_H
 
-#include <iostream>
-#include <vector>
 
-#include "Joueur.h"
 #include "Carte.h"
+#include "Terrain.h"
+#include "Musicien.h"
+#include "Terrain.h"
+#include "Style.h"
+#include "Player.h"
+#include "Joueur.h"
+#include "Attack.h"
+#include "Deck.h"
+#include "Special.h"
 
-void ajouterJoueur(std::vector<Joueur> tousLesJoueurs);
-void afficherTouslesJoueurs(std::vector<Joueur> tousLesJoueurs);
-void afficherToutesLesCartes(std::vector<Carte*> toutesLesCartes);
-
-
-void menuPrincipal();
 
 
 
-#endif // MAIN_H_INCLUDED
 
+#endif

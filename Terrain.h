@@ -1,14 +1,15 @@
 #ifndef TERRAIN_H
 #define TERRAIN_H
 
-#include "Carte.h"
-#include "Special.h"
-#include "Musicien.h"
-#include "Style.h"
-#include "Player.h"
-
 #include <stack>
 #include <vector>
+#include <deque>
+
+#include "Carte.h"
+#include "Style.h"
+#include "Special.h"
+#include "Musicien.h"
+#include "Player.h"
 
 class Terrain
 {
@@ -35,7 +36,7 @@ public:
 
     /// Ce que j'ai rajouté
     void remplirPioche(Carte* unecarte); /// On s'en fou
-    Carte* PiocherCarte(int faconDePiocher);
+    Carte* PiocherCarte();
     int verificationJeu(); /// A améliorer absolument, doit contenir tous les cas possibles !!!!
     void DisplayTerrain() const; // Affichage du terrain
 
@@ -45,6 +46,9 @@ public:
     bool GetpresenceMusicien()const; // Pour savoir si il y a un musicien présent
     int musicienCapaciteAttaquer(); /// A compléter
     void effetCarteSpecial(); // Effet de la carte spécial, à compléter
+
+    void melangerPioche();
+    void JouerNormalement(Carte* carteTempon);
 
     void TourDeJeu();
     void finTourDeJeu();
@@ -61,9 +65,10 @@ public:
 protected:
 
 private:
-    std::vector<Carte*> m_pioche; // J'ai ms en pointeur pour le remplissage dans la méthode remplirpioche tu vas comprendre
+    std::deque<Carte*> m_pioche; // J'ai ms en pointeur pour le remplissage dans la méthode remplirpioche tu vas comprendre
     std::stack<Carte*> m_cimetiere;
-    std::vector<Style*> m_styles;
+    std::vector<Style*> m_styles[4];///preciser les 4 styles
+
     int m_condition; // pour savoir si il peut continuer à jouer
 
     Player* m_joueur; /// Pour qu'on ait un joueur, je n'arrive pas à accéder à cet objet dans les méthodes de terrain.cpp
