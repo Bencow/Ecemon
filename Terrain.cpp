@@ -61,12 +61,17 @@ Carte* Terrain::PiocherCarte()
 
 void Terrain::JouerNormalement(Carte* carteTempon)
 {
-    Musicien* musicienTempon = dynamic_cast<Musicien*>(carteTempon);
-    Special* specialTempon = dynamic_cast<Special*>(carteTempon);
-    Style* styleTempon = dynamic_cast<Style*>(carteTempon);
+    Musicien* musicienTempon;
+    Special* specialTempon;
+    Style* styleTempon;
     bool choixPlacerCarte(false);
 
-    carteTempon = PiocherCarte(); /// Pioche une carte normalement, envoie le int adapté
+    carteTempon = PiocherCarte(); /// Pioche une carte normalement
+
+    musicienTempon = dynamic_cast<Musicien*>(carteTempon);
+    specialTempon = dynamic_cast<Special*>(carteTempon);
+    styleTempon = dynamic_cast<Style*>(carteTempon);
+
 
     ///On verra après avec les dynamic_cast
     if(musicienTempon) // Si c'est une carte musicien
@@ -82,7 +87,7 @@ void Terrain::JouerNormalement(Carte* carteTempon)
 
             //MusicienAttaque(m_ennemi); // attaque de l'ennemi
 
-            ///m_musicienActif->attaquer(m_ennemi);
+//            m_musicienActif->attaquer(m_ennemi);
         }
         if(!choixPlacerCarte) // On remet la carte tiré en dessous de la pioche
         {
@@ -125,6 +130,7 @@ void Terrain::JouerNormalement(Carte* carteTempon)
 void Terrain::TourDeJeu()
 {
     Carte* carteTempon; // Carte tempon qui va servir pour récupérer la carte piochée et agir en fonction
+    Musicien* musicien;
     int typeDePiochage(0);
     bool voirCarteEnergie;
 
@@ -132,7 +138,7 @@ void Terrain::TourDeJeu()
     m_joueur->Setjouer(false); /// Veut dire qu'il n'a pas encore joué
     m_joueur->SetTourperso(true); /// On met à true pour qu'il puisse effectuer une fois la boucle de jeu
 
-    while(m_joueur->GetTourPerso()&&!m_joueur->Getfin()) // Tant que le joueur peut jouer et qu'il ne passe pas son tour
+    while(m_joueur->GetTourPerso() && !m_joueur->Getfin()) // Tant que le joueur peut jouer et qu'il ne passe pas son tour
     {
 
         if(!m_joueur->Getjouer()) // Si il n'a pas encore joué
@@ -144,11 +150,15 @@ void Terrain::TourDeJeu()
             {
                 JouerNormalement(carteTempon);
             }
-            if(Getcondition()==2)
+            if(Getcondition()==2)/// Piocher jusqu'a avoir un musicien
             {
-                effetCarteSpecial(); // La carte spécial agît si il y en a une
+///                do
+///                {
+///                    carteTempon = PiocherCarte(); /// Pioche une carte normalement
+///                    musicien = dynamic_cast<Musicien*>(carteTempon);
+///
+///                }while();
 
-                carteTempon = PiocherCarte(); /// Pioche jusqu'à avoir une créature
                 //m_musicienActif=carteTempon; // Le musicien prend la valeur de la carte pioché
                 MusicienAttaque(m_ennemi); // attaque de l'ennemi
             }

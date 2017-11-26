@@ -12,6 +12,7 @@ class Musicien : public Carte
 {
     public:
         Musicien();
+        Musicien(int tab_attaques[2][4]);///Marc rajoute les autres paramètres
         virtual ~Musicien();
 
         virtual int GetType(){return 1;}
@@ -20,15 +21,15 @@ class Musicien : public Carte
         void SetLP(int val) { m_LP = val; }
         void modifvie(int val){m_LP-=val;} // On enlève de la vie au musicien
 
+        void afficherCoutAttaque();
+
         //void attaquer(Terrain* ennemi);
 
     protected:
 
     private:
         int m_LP;
-        Attack* m_attaque1; // J'en déclare deuxx car ça ne marche pas avec le vecteur
-        Attack* m_attaque2;
-        //vector<Attack*> m_attaque;
+        Attack m_attaques[2];
 };
 
 #endif // MUSICIEN_H
